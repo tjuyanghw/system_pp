@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='/fonts/icomoon.css') }}">
+</head>
+<body>
+<div class="viewport">
+    <!--上传文件-->
+
+    <form action="" method="post" enctype="multipart/form-data">
+    <table>
+        <tbody>
+            <tr>
+                <td>头像：</td>
+                <td><input type="file" name="avatar"></td>
+            </tr>
+            <tr>
+                <td>描述：</td>
+                <td><input type="text" name="desc"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="点击提交"></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+
+
+
+</div>
+</body>
+</html>

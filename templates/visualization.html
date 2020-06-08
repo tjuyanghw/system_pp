@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>可视化</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='fonts/icomoon.css') }}">
+{#    <script type="text/javascript" src="../static/js/text.js" ></script>#}
+{#     <script src="../static/js/echarts.min.js"></script>#}
+{#    <script src="http://d3js.org/d3.v5.min.js"></script>#}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+</head>
+
+<body>
+    <div class="viewport">
+        <div class="column">
+			<!--标签分布-->
+			<div class="label">
+			    <div class="inner">
+			        <h3 style="text-align: center; color: black; font-size: 15px; font-weight:bold;">标签类型分布</h3>
+                    <div id="corlor_bar" style="text-align: center;"></div>
+                    
+			    </div>
+			</div>
+
+            <div class="monitor panel" style="margin-top:100px">
+                <div class="inner">
+                    <div class="tabs">
+                        <a href="javascript:;" data-index="0" class="active"><p style="color: black; font-size: 15px; font-weight:bold;">标签说明</p></a>
+                            <div align="left"><a style="background: #ffd2cc ">&nbsp</a>&nbsp&nbsp隐私介绍</div>
+                            <div align="left"><a style="background: #1982c4 ">&nbsp</a>&nbsp&nbsp第一方收集和使用数据</div>
+                            <div align="left"><a style="background: #ffca3a ">&nbsp</a>&nbsp&nbspCookies 以及相似技术</div>
+                            <div align="left"><a style="background: #9c89b8 ">&nbsp</a>&nbsp&nbsp第三方收集和分享数据</div>
+                            <div align="left"><a style="background: #2ec4b6 ">&nbsp</a>&nbsp&nbsp用户选项及权利</div>
+                            <div align="left"><a style="background: #ff595e ">&nbsp</a>&nbsp&nbsp数据安全</div>
+                            <div align="left"><a style="background: #6a4c93 ">&nbsp</a>&nbsp&nbsp数据保留</div>
+                            <div align="left"><a style="background: #118ab2 ">&nbsp</a>&nbsp&nbsp国际数据存储及转移</div>
+                            <div align="left"><a style="background: #83c5be ">&nbsp</a>&nbsp&nbsp特殊人群</div>
+                            <div align="left"><a style="background: #f0a6ca ">&nbsp</a>&nbsp&nbsp隐私政策修改</div>
+                            <div align="left"><a style="background: #9a8c98 ">&nbsp</a>&nbsp&nbsp隐私政策联系信息</div>
+                    </div>
+                    <div id="main"></div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="column">
+            <!-- 文本 -->
+            <div class="text" style="height: 800px">
+                <h3>
+                    <span class="icon-cube"></span>
+                    隐私政策文本
+                </h3>
+                <div class="chart" style="margin-top: 40px; overflow-x:hidden">
+
+
+                </div>
+            </div>
+        </div>
+        <div class="column" >
+
+            <!-- 摘要 -->
+            <div class="sale" style="height: 400px;overflow-x:hidden">
+                <div class="inner">
+
+                        <h3 style="text-align: center; color: black; font-size: 15px; font-weight:bold;">应用简介</h3>
+
+                    <div id="summary" style="margin-top:20px">
+
+                        <ul style="margin-top: 10px">
+                            <li><span style="font-weight:bold;">应用 : </span>  {{ info.app_name | safe}}</li>
+                            <li><span style="font-weight:bold;">评分 : </span>  {{ info.star | safe}} </li>
+{#                            <li><span style="font-weight:bold;">当前版本 : </span>  {{ info.app_name | safe}}</li>#}
+                            <li><span style="font-weight:bold;">安装次数 : </span>  {{ info.install_num | safe}}</li>
+                            <li><span style="font-weight:bold;">提供商 : </span>  {{ info.offer | safe}}</li>
+                            <li><span style="font-weight:bold;">应用更新日期 : </span>  {{ info.update_time | safe}}</li>
+{#                            <li><span style="font-weight:bold;">应用更新日期 : </span>  2020年2月22日</li>#}
+                            <li><span style="font-weight:bold;">原始隐私政策链接： </span> <a align="left" href={{ info.pp_link | safe}}, style="font-size: 15px; margin-left: -3px" >隐私政策</a></li>
+                        </ul>
+                        <div style="margin-top: 20px; height:500px;" >
+{#                            <b>Opera 浏览器专为您的 Android 设备而设计，是一款快速、安全的网页浏览器，具有经过重新设计的新闻订阅、内置广告拦截功能和节省流量模式。</b><br><br><b>★ 热门功能 ★ </b><br><br><b>● 拦截广告，加快浏览速度：</b> <br>Opera 自带的广告拦截功能能够有效地帮助您去除侵入性广告和更快地加载页面，为您带来更高效的浏览体验。<br><br><b>● 个性化的新闻订阅：</b> <br>在我们高度智能化的人工智能新闻引擎的支持下，经过重新设计的新闻订阅功能能够让您通过轻扫屏幕翻阅浏览器内精选的个性化新闻频道、订阅喜欢的主题并保存文章以便在稍后阅读。阅读人工智能根据您的兴趣为您量身定制的新闻，及时了解天下事。 <br><br><b>● 夜间模式：</b><br>Opera 的夜间模式提供了可调的照明选项，能够让您在黑暗中获得最舒适的阅读体验并最大限度减轻眼睛疲劳。从主菜单中可以轻松访问夜间模式。<br><br><b>● 管理密码和自动填充信用卡：</b><br>选择自动保存各个网站的密码，并安全地自动填充您用于在线购物的支付信息。 <br><br><b>● 无痕浏览：</b> <br>利用无痕浏览可在互联网上随意地浏览，而不会在设备上留下任何痕迹。在标签库中，可轻松在无痕浏览与正常浏览之间切换。<br><br><b>● 在任何屏幕上舒适地阅读：</b> <br>Opera 浏览器具有文本大小设置，能够让您 根据自己的阅读偏好调整页面。更重要的是，它能够与我们的自动换行功能完美结合，为您带来无与伦比的阅读体验。<br><br><b>● 轻松管理下载：</b> <br>我们推出的新型下载管理器能够比以往更加轻松、快速地下载文件！您可以轻松排列和分享各个下载项，而且只需向右或向左快速扫一下，即可将它们从您的手机或下载列表中删除。当您正在下载内容但需要打开另一个应用程序时，我们还支持后台下载！<br><br><b>● 主屏幕快捷方式：</b><br>Opera 浏览器适用于 Android 7.1 版或更高版本， 允许从主屏幕快速执行搜索、打开新的隐身标签或者扫描二维码。要创建您自己的主屏幕快捷方式，请在您设备的主屏幕上长按 Opera 图标，然后点击您需要的功能。<br><br><b>其他亮点</b><br><br><b>● 浏览器启动选项：</b><br>每个人都有自己的个性，因此我们允许您选择是在打开浏览器时始终显示新的标签还是从上次离开的位置继续浏览，以及当您离开浏览器时是选择关闭还是保留已打开的标签。<br><br><b>● 同步您的 Opera 设备：</b> <br>您可以访问其他设备上的所有 Opera 书签、“我的导航”快捷方式和打开的标签。Android 上的 Opera 现在可以轻松与计算机上的 Opera 浏览器同步。<br><br><b>● 添加到主屏幕：</b><br>将任何网站直接添加到您设备的主屏幕上，以便能够更快地访问这些网站。Facebook 等网站甚至能够像应用程序那样为您发送推送通知。<br><br>Opera 让您物尽其用：https://www.opera.com/mobile/android<br><br>Opera 可能会显示来自 Facebook 的广告。要了解详情，请访问 https://m.facebook.com/ads/ad_choices<br><br>保持联系：<br>Twitter - http://twitter.com/opera/<br>Facebook – http://www.facebook.com/opera/<br>Instagram – http://www.instagram.com/opera<br><br>条款与条件<br><br>下载本应用程序，即表明您同意 https://www.opera.com/eula/mobile 上的最终用户许可协议。此外，您可以在 https://www.opera.com/privacy 了解 Opera 如何处理及保护您的数据。#}
+                                {{ info.description | safe }}
+                        </div>
+                        
+{#                        <p align="left" style="margin-top: 20px; ">进一步了解不一致情况请访问#}
+{#                            <a align="left" href="https://gdpr-info.eu/" style="font-size: 15px; margin-left: -3px" >GDPR官网：</a></p>#}
+{#                        <a align="left" href="https://gdpr-info.eu/" style="font-size: 15px; margin-left: -3px" >https://gdpr-info.eu/</a>#}
+                    </div>
+                </div>
+
+            </div>
+            <div class="sales">
+                <div class="inner_label">
+			        <h3 style="text-align: center; color: black; font-size: 15px; font-weight:bold;top: 10px;">同类型APP里各个label的统计分布</h3>
+			    </div>
+                <div id="container">
+{#                <svg width="100%" height="100%"></svg>#}
+
+			    </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/d3.js') }}"></script>
+<script src="https://www.jq22.com/jquery/echarts-4.2.1.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+<script  src="{{ url_for('static', filename='js/index.js') }}"></script>
+{#<script src="{{ url_for('static', filename='js/chart.js') }}"></script>#}
+{#<script type="text/javascript" src="../static/js/text.js" ></script>#}
+<!--接受数据-->
+<script>
+
+    var data =eval('{{ name|safe }}');
+    console.log(data);
+    const res =[];
+    for(var i=0;i<data.length;i++){
+        const text=data[i].review;
+        const label_data=data[i].label;
+        const weig = data[i].word_weight;
+        // var arrEval = eval(weig);
+        var arrParse = JSON.parse(weig);
+        const w =arrParse.toString().split(",");
+        const weight=w.map(Number);
+        if(label_data==0){
+            var a0_text=text;
+            weightsText(a0_text,weight,"#ffffff","#ffd2cc",label_data);
+        }
+        if(label_data==1){
+            var a1_text=text;
+            weightsText(a1_text,weight,"#ffffff","#1982c4")
+        }
+        if(label_data==2){
+            var a2_text=text;
+            weightsText(a2_text,weight,"#ffffff","#ffca3a");
+        }
+        if(label_data==3){
+            var a3_text =text;
+            weightsText(a3_text,weight,"#ffffff","#9c89b8");
+        }
+
+        if(label_data==4){
+            var a4_text=text;
+            weightsText(a4_text,weight,"#ffffff","#2ec4b6");
+
+        }
+        if(label_data==5){
+            var a5_text=text;
+            weightsText(a5_text,weight,"#ffffff","#ff595e")
+
+        }
+        if(label_data==6){
+            var a6_text=text;
+            weightsText(a6_text,weight,"#ffffff","#6a4c93")
+
+        }
+        if(label_data==7){
+            var a7_text=text;
+            weightsText(a7_text,weight,"#ffffff","#118ab2")
+
+        }
+        if(label_data==8){
+            var a8_text=text;
+            weightsText(a8_text,weight,"#ffffff","#83c5be");
+
+        }
+        if(label_data==9){
+            var a9_text=text;
+            weightsText(a9_text,weight,"#ffffff","#f0a6ca");
+
+        }
+        if(label_data==10){
+            var a10_text=text;
+            weightsText(a10_text,weight,"#ffffff","#9a8c98");
+        }
+    }
+
+    var obj = {}, k, arr1 = [];
+    for (var i = 0, len = data.length; i < len; i++) {
+        k = data[i].label;
+        if (obj[k])
+            obj[k]++;
+        else
+            obj[k] = 1;
+    }
+    //保存结果{0-'元素'，count-出现次数}
+    for (var o in obj) {
+        arr1.push([o, obj[o]]);
+    }
+    var pie = d3.layout.pie().value(function (d) {
+        return d[1];
+    });
+    var piedata = pie(arr1);
+    var width = 400;
+    var height = 400;
+    var svg = d3.select("div#corlor_bar").append("svg").attr("width", width).attr("height", height).attr("text-align", "center");
+    var outerRadius = width / 3;           // 外半径
+    var innerRadius = 0;             // 内半径
+    var arc = d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius);
+    {#var color = d3.scale.category10();#}
+    var color = new Array("#ffd2cc", "#1982c4", "#ffca3a", "#9c89b8", "#2ec4b6", "#ff595e", "#6a4c93", "#118ab2", "#83c5be", "#f0a6ca", "#9a8c98");
+    var arcs = svg.selectAll("g").data(piedata).enter().append("g").attr("transform", "translate(" + (width / 2.5) + "," + (height / 2.5) + ")");
+    arcs.append("path").attr("fill", function (d, i) {
+
+        return color[d.data[0]];
+    }).attr("d", function (d) {
+        return arc(d);
+    });
+    arcs.append("text").attr("transform", function (d) {
+        var x = arc.centroid(d)[0] * 1.4;
+        var y = arc.centroid(d)[1] * 1.4;
+        return "translate(" + x + "," + y + ")";
+        // return "translate(" + arc.centroid(d)[0] + ")";
+    }).attr('text-anchor', 'middle').text(function (d) {
+        return d.data[1];
+    });
+    var tooltip = d3.select("div.label").append("div").attr("class", "tooltip").attr("opacity", 0.0);
+
+    arcs.on("mouseover", function (d, i) {
+        console.log(d.data[0] + "标签的数量为" + "<br />" + d.data[1])
+        tooltip.html(d.data[0] + "标签的数量为" + "<br />" + d.data[1])
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY + 20) + "px")
+            .style("opacity", 1.0);
+
+    })
+        .on("mousemover", function (d) {
+            tooltip.style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY + 1) + "px");
+        })
+        .on("mouseout", function (d) {
+
+            tooltip.style("opacity", 0.0);
+        })
+
+        //权重
+    function weightsText (text,word_weight,color1,color2,label) {
+        {#weights = text.split(" ").map(d => Math.random());#}
+        {#console.log(weights);#}
+        const weights =word_weight;
+
+
+        const width = 600;
+        const letterwidth = {};
+        const w = width;
+        const div = document.createElement('div');
+        div.style.float = 'left';
+        document.body.appendChild(div);
+        let i = text.length;
+        while (i--) {
+            let letter = text.charAt(i-1);
+            div.innerText = letter;
+            let computerWidth = window.getComputedStyle(div, null).getPropertyValue("width").match(/\d+/)[0];
+            letterwidth[letter] = parseInt(computerWidth);
+        }
+        let maxLength = 0;
+        text.split(" ").forEach(d => {
+            let length = 0;
+            var i = d.length;
+            while (i--) {
+                length += letterwidth[d.charAt(i)];
+            }
+            if (length > maxLength) {
+                maxLength = length;
+            }
+        });
+        let xText = 0;
+        let yText = 0;
+        const color = d3.scale.linear().domain([0, d3.max(weights)]).range([color1, color2]);
+        const words = text.split(" ").map((d, index) => {
+            let length = 0;
+            var i = d.length;
+            while (i--) {
+                length += letterwidth[d.charAt(i)];
+            }
+            let newWidthText = xText + 15 + length;
+            if (newWidthText > w - 50) {
+                xText = 0;
+                yText += 20;
+                newWidthText = 10 + length;
+            }
+            let value = {
+                xText: xText,
+                yText: yText,
+                word: d,
+                weight: weights[index],
+                width: length + 20,
+            };
+            xText = newWidthText;
+            return value;
+        });
+        const translate = 15;
+        const h = translate + (yText + 20);
+        const svg = d3.select('div.chart').append("svg").attr("width", width).attr("height", h);
+        {#svg.append("g").attr("transform", `translate(50, ${translate})`).selectAll("rect").data(words).enter().append("rect").attr("x", d => d.xText - 2).attr("y", d => d.yText - 15).attr("width", d => d.width).attr("height", 18).attr("fill", d => color(d.weight)).attr("rx", 8).attr("ry", 8);#}
+        svg.append("g").attr("transform", `translate(50, ${translate})`).selectAll("rect").data(words).enter().append("rect").attr("x", d => d.xText - 2).attr("y", d => d.yText - 15).attr("width", d => d.width).attr("height", 18).attr("fill", d => color(d.weight));
+        svg
+            .append("g")
+            .attr("transform", `translate(50, ${translate})`)
+            .selectAll("text")
+            .data(words)
+            .enter()
+            .append("text")
+            .attr("class", d => `V5 ${d.word}`)
+            .attr("x", d => d.xText)
+            .attr("y", d => d.yText)
+            .text(d => d.word);
+            {#.style('cursor', 'pointer');#}
+
+    }
+
+
+
+    var margin = {top: 10, right: 30, bottom: 120, left: 60},
+    width = 400 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var x0 = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var x1 = d3.scale.ordinal();
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x0)
+    .tickSize(0)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+
+var color = new Array("#ffd2cc", "#1982c4", "#ffca3a", "#9c89b8", "#2ec4b6", "#ff595e", "#6a4c93", "#118ab2", "#83c5be", "#f0a6ca", "#9a8c98");
+var svg = d3.select('div.sales').append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var category_info = '{{category_info | tojson}}';
+    var label_setnum = '{{ label_setnum | tojson }}';
+    console.log(label_setnum);
+    console.log(category_info);
+    var data_json=[
+    {
+        "categorie": "隐私介绍",
+        "values": [
+            {
+                "label": 0,
+                "value": '{{category_info.label_0 | tojson}}',
+                "rate": "Not at all"
+            },
+            {
+                "label": 0,
+                "value": '{{ label_setnum.label_0 |tojson }}',
+                "rate": "Not very much"
+            }
+        ]
+    },
+    {
+        "categorie": "第一方收集信息和使用",
+        "values": [
+            {
+                "label": 1,
+                "value": '{{category_info.label_1 | tojson}}',
+                "rate": "Not at all"
+            },
+            {
+                "label": 1,
+                "value": '{{ label_setnum.label_1 |tojson }}',
+                "rate": "Not very much"
+            }
+        ]
+    },
+    {
+        "categorie": "Cookies以及相似技术",
+        "values": [
+            {
+                "label": 2,
+                "value": '{{category_info.label_2 | tojson}}',
+                "rate": "Not at all"
+            },
+            {
+                "label": 2,
+                "value": '{{ label_setnum.label_2 |tojson }}',
+                "rate": "Not very much"
+            }
+        ]
+    },
+    {
+        "categorie": "第三方收集和分享数据",
+        "values": [
+            {
+                "label": 3,
+                "value": '{{category_info.label_3 | tojson}}',
+                "rate": "Not at all"
+            },
+            {
+                "label": 3,
+                "value": '{{ label_setnum.label_3 |tojson }}',
+                "rate": "Not very much"
+            }
+        ]
+    },
+    {
+        "categorie": "用户选项及权利",
+        "values": [
+            {
+                "label": 4,
+                "value":'{{category_info.label_4 | tojson}}',
+                "rate": "Not at all"
+            },
+            {
+                "label": 4,
+                "value": '{{ label_setnum.label_4 |tojson }}',
+                "rate": "Not very much"
+            }
+        ]
+    },
+    {
+        "categorie": "数据安全",
+        "values": [
+            {
+                "label": 5,
+                "value": '{{category_info.label_5 | tojson}}',
+                "rate": "Not at all"
+            },
+            {
+                "label": 5,
+                "value": '{{ label_setnum.label_5 |tojson }}',
+                "rate": "Not very much"
+            }
+        ]
+    },
+	{
+	    "categorie": "数据保留",
+	    "values": [
+	        {
+                "label": 6,
+	            "value": '{{category_info.label_6 | tojson}}',
+	            "rate": "Not at all"
+	        },
+	        {
+                "label": 6,
+	            "value": '{{ label_setnum.label_6 |tojson }}',
+	            "rate": "Not very much"
+	        }
+	    ]
+	},
+	{
+	    "categorie": "国际数据存储及转移",
+	    "values": [
+	        {
+                "label": 7,
+	            "value": '{{category_info.label_7 | tojson}}',
+	            "rate": "Not at all"
+	        },
+	        {
+                "label": 7,
+	            "value": '{{ label_setnum.label_7 |tojson }}',
+	            "rate": "Not very much"
+	        }
+	    ]
+	},
+	{
+	    "categorie": "特殊人群",
+	    "values": [
+	        {
+                "label": 8,
+	            "value": {{category_info.label_8 | tojson}},
+	            "rate": "Not at all"
+	        },
+	        {
+                "label": 8,
+	            "value": '{{ label_setnum.label_8 |tojson }}',
+	            "rate": "Not very much"
+	        }
+	    ]
+	},
+	{
+	    "categorie": "隐私政策修改",
+	    "values": [
+	        {
+                "label": 9,
+	            "value": {{category_info.label_9 | tojson}},
+	            "rate": "Not at all"
+	        },
+	        {
+                "label": 9,
+	            "value":'{{category_info.label_9 | tojson}}',
+	            "rate": "Not very much"
+	        }
+	    ]
+	},
+	{
+	    "categorie": "隐私政策联系信息",
+	    "values": [
+	        {
+                "label": 10,
+	            "value": {{category_info.label_10 | tojson}},
+	            "rate": "Not at all"
+	        },
+	        {
+                "label": 10,
+	            "value": '{{category_info.label_10 | tojson}}',
+	            "rate": "Not very much"
+	        }
+	    ]
+	}
+
+];
+    var categoriesNames = data_json.map(function(d) { return d.categorie; });
+
+  var rateNames = data_json[0].values.map(function(d) { return d.rate; });
+x0.domain(categoriesNames);
+  x1.domain(rateNames).rangeRoundBands([0, x0.rangeBand()]);
+  y.domain([0, d3.max(data_json, function(categorie) { return d3.max(categorie.values, function(d) { return d.value; }); })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+	  .selectAll("text")
+	      .style("text-anchor", "end")
+	      .attr("dx", "-.8em")
+	      .attr("dy", ".15em")
+	      .attr("transform", "rotate(-40)");
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .style('opacity','0')
+      .call(yAxis)
+  .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .style('font-weight','bold');
+
+  svg.select('.y').transition().duration(10).delay(1600).style('opacity','1');
+
+  var slice = svg.selectAll(".slice")
+      .data(data_json)
+      .enter().append("g")
+      .attr("class", "g")
+      .attr("transform",function(d) { return "translate(" + x0(d.categorie) + ",0)"; });
+
+
+
+  slice.selectAll("rect")
+      .data(function(d) { return d.values; })
+  .enter().append("rect")
+  .attr("class","rect")
+      .attr("width", x1.rangeBand())
+      .attr("x", function(d) { return x1(d.rate); })
+      .style("fill", function (d, i) {  return color[d.label];})
+      .attr("y", function(d) { return y(0); })
+      .attr("height", function(d) { return height - y(0); })
+      ;
+
+  slice.selectAll("rect")
+      .transition()
+      .delay(function (d) {return Math.random()*1000;})
+      .duration(1000)
+      .attr("y", function(d) { return y(d.value); })
+      .attr("height", function(d) { return height - y(d.value); });
+
+  //Legend
+  var legend = svg.selectAll(".legend")
+      .data(data_json[0].values.map(function(d) { return d.categorie; }).reverse())
+  .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
+      .style("opacity","0");
+
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 6)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) {return d; });
+
+  legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
+
+    {#var app_label=["隐私介绍","第一方收集信息和使用","Cookies以及相似技术","第三方收集和分享数据","用户选项及权利","数据安全","数据保留","国际数据存储及转移","特殊人群","隐私政策修改","隐私政策联系信息"];#}
+    {#var sale=[451,1647,303,894,720,275,146,136,214,176,205];#}
+    {#var app_data =[5,44,2,12,5,0,0,2,2,2,2];#}
+    {#var bar_width =600;#}
+    {#var bar_height = 600;#}
+    {#var svg = d3.select("div#container").append("svg").attr("width",bar_width).attr("height",bar_height);#}
+    {##}
+    {#  const padding = {#}
+    {#      top: 0,#}
+    {#      right: 60,#}
+    {#      bottom: 20,#}
+    {#      left: 60,#}
+    {#  }#}
+    {##}
+    {##}
+    {#var xScale = d3.scale.ordinal().domain(app_label).rangeRoundBands([0, bar_width - padding.left - padding.right]);#}
+    {#var x1=d3.scale.ordinal()#}
+		{#	.domain(d3.range(app_label))#}
+		{#	.rangeBands([0,xScale.rangeBand()]);#}
+    {#var xAxis = d3.svg.axis()#}
+    {#   .scale(xScale)#}
+    {#   .orient("bottom");#}
+    {#var yScale = d3.scale.linear()#}
+    {#   .domain([0,d3.max(sale)])#}
+    {#   .range([height  - padding.top- padding.bottom, 0]);#}
+    {#var yAxis = d3.svg.axis()#}
+    {#   .scale(yScale)#}
+    {#   .orient("left");#}
+    {#var rectPadding = 14;#}
+    {#var max = d3.max(sale);#}
+    {#var colors = new Array("#ffd2cc", "#1982c4", "#ffca3a", "#9c89b8", "#2ec4b6", "#ff595e", "#6a4c93", "#118ab2", "#83c5be", "#f0a6ca", "#9a8c98");#}
+    {#var rects = svg.selectAll(".MyRect")#}
+    {#       .data(sale)#}
+    {#       .enter()#}
+    {#       .append("rect")#}
+    {#       .attr("class","MyRect")#}
+    {#       .attr("transform","translate(" + padding.left + "," + padding.top + ")")#}
+    {#       .attr("x", function(d,i){#}
+    {#           return i*(xScale.rangeBand()) + rectPadding/2;#}
+    {#       } )#}
+    {#       .attr("y",function(d){#}
+    {#           return yScale(d);#}
+    {#       })#}
+    {#       .attr("width", xScale.rangeBand())#}
+    {#       .attr("height", function(d){#}
+    {#           return height - padding.top - padding.bottom - yScale(d);#}
+    {#       })#}
+    {#       .attr("fill",function (d, i) {  return colors[i];   });#}
+    {#var texts = svg.selectAll(".MyText")#}
+    {#       .data(sale)#}
+    {#       .enter()#}
+    {#       .append("text")#}
+    {#       .attr("class","MyText")#}
+    {#       .attr("transform","translate(" + padding.left + "," + padding.top + ")")#}
+    {#       .attr("x", function(d,i){#}
+    {#           return i*(xScale.rangeBand()) + rectPadding/20;#}
+    {#       } )#}
+    {#       .attr("y",function(d){#}
+    {#           return yScale(d);#}
+    {#       })#}
+    {#       .attr("dx",function(){#}
+    {#           return (xScale.rangeBand() - rectPadding)/2;#}
+    {#       })#}
+    {#       .attr("dy",function(d){#}
+    {#           return 10;#}
+    {#       })#}
+    {#       .text(function(d){#}
+    {#           return d;#}
+    {#       })#}
+    {#       .style({#}
+    {#       "fill":"#FFF",#}
+    {#       "dominant-baseline": "middle",#}
+    {#       'font-size': 10#}
+    {#       });#}
+    {# svg.append("g")#}
+    {# .attr("class","axis axis--x")#}
+    {# .attr("transform","translate(" + padding.left + "," + (height - padding.bottom) + ")")#}
+    {# .call(xAxis)#}
+    {# .selectAll("text")#}
+    {#.style("text-anchor", "end")#}
+    {#.attr("dx", "-.8em")#}
+    {#.attr("dy", ".15em")#}
+    {#.attr("transform", "rotate(-65)");#}
+    {##}
+    {#//添加y轴#}
+    {#svg.append("g")#}
+    {# .attr("class","axis axis--y")#}
+    {# .attr("transform","translate(" + padding.left + "," + padding.top + ")")#}
+    {# .call(yAxis);#}
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</html>

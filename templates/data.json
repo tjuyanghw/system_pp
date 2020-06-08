@@ -1,0 +1,168 @@
+[
+    {
+        "categorie": "隐私介绍", 
+        "values": [
+            {
+                "label": 0,
+                "value": 451, 
+                "rate": "Not at all"
+            }, 
+            {
+                "label": 0,
+                "value": 5, 
+                "rate": "Not very much"
+            }
+        ]
+    }, 
+    {
+        "categorie": "第一方收集信息和使用", 
+        "values": [
+            {
+                "label": 1,
+                "value": 1647, 
+                "rate": "Not at all"
+            }, 
+            {
+                "label": 1,
+                "value": 44, 
+                "rate": "Not very much"
+            }
+        ]
+    }, 
+    {
+        "categorie": "Cookies以及相似技术", 
+        "values": [
+            {
+                "label": 2,
+                "value": 303, 
+                "rate": "Not at all"
+            }, 
+            {
+                "label": 2,
+                "value": 2, 
+                "rate": "Not very much"
+            }
+        ]
+    }, 
+    {
+        "categorie": "第三方收集和分享数据", 
+        "values": [
+            {
+                "label": 3,
+                "value": 894, 
+                "rate": "Not at all"
+            }, 
+            {
+                "label": 3,
+                "value": 12, 
+                "rate": "Not very much"
+            }
+        ]
+    }, 
+    {
+        "categorie": "用户选项及权利", 
+        "values": [
+            {
+                "label": 4,
+                "value": 720, 
+                "rate": "Not at all"
+            }, 
+            {
+                "label": 4,
+                "value": 5, 
+                "rate": "Not very much"
+            }
+        ]
+    }, 
+    {
+        "categorie": "数据安全", 
+        "values": [
+            {
+                "label": 5,
+                "value": 275, 
+                "rate": "Not at all"
+            }, 
+            {
+                "label": 5,
+                "value": 0, 
+                "rate": "Not very much"
+            }
+        ]
+    },
+	{
+	    "categorie": "数据保留", 
+	    "values": [
+	        {
+                "label": 6,
+	            "value": 146, 
+	            "rate": "Not at all"
+	        }, 
+	        {
+                "label": 6,
+	            "value": 0, 
+	            "rate": "Not very much"
+	        }
+	    ]
+	},
+	{
+	    "categorie": "国际数据存储及转移", 
+	    "values": [
+	        {
+                "label": 7,
+	            "value": 136, 
+	            "rate": "Not at all"
+	        }, 
+	        {
+                "label": 7,
+	            "value": 2, 
+	            "rate": "Not very much"
+	        }
+	    ]
+	},
+	{
+	    "categorie": "特殊人群", 
+	    "values": [
+	        {
+                "label": 8,
+	            "value": 214, 
+	            "rate": "Not at all"
+	        }, 
+	        {
+                "label": 8,
+	            "value": 2, 
+	            "rate": "Not very much"
+	        }
+	    ]
+	},
+	{
+	    "categorie": "隐私政策修改", 
+	    "values": [
+	        {
+                "label": 9,
+	            "value": 176, 
+	            "rate": "Not at all"
+	        }, 
+	        {
+                "label": 9,
+	            "value": 2, 
+	            "rate": "Not very much"
+	        }
+	    ]
+	},
+	{
+	    "categorie": "隐私政策联系信息", 
+	    "values": [
+	        {
+                "label": 10,
+	            "value": 205, 
+	            "rate": "Not at all"
+	        }, 
+	        {
+                "label": 10,
+	            "value": 2, 
+	            "rate": "Not very much"
+	        }
+	    ]
+	}
+	
+]
